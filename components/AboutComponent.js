@@ -5,6 +5,7 @@ import { ScrollView, Text} from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
+import { Loading } from './LoadingComponent';
 
 const mapStateToProps = state => {
     return {
@@ -53,19 +54,47 @@ class About extends Component {
                     />  
             );
         }
-        const { navigate } = this.props.navigation;
-        return (
-            <ScrollView >
-                <History/>
-                <Card title = 'Corporate Leadership'>
-                    <FlatList
-                    data = {this.props.leaders.leaders}
-                    keyExtractor = {item => item.id.toString()}
-                    renderItem = {renderLeaderItem}
-                    />
-                </Card> 
-            </ScrollView>
-        );
+       
+        if (this.props.leaders.isLoading) {
+            return(
+                <ScrollView >
+                    <History/>
+                    <Card 
+                        title = 'Corporate Leadership'>
+                        <Loading />
+                    </Card>
+                </ScrollView>
+
+            );
+        }
+        else if (this.props.leaders.errMess){
+            return(
+                <ScrollView >
+                    <History/>
+                    <Card 
+                        title = 'Corporate Leadership'>
+                        <Text>{this.props.leaders.errMess}</Text>
+                    </Card>
+                </ScrollView>
+            );
+
+        }
+        else {
+            return (
+                <ScrollView >
+                    <History/>
+                    <Card title = 'Corporate Leadership'>
+                        <FlatList
+                        data = {this.props.leaders.leaders}
+                        keyExtractor = {item => item.id.toString()}
+                        renderItem = {renderLeaderItem}
+                        />
+                    </Card> 
+                </ScrollView>
+            );
+
+        }
+        
     }
 }
 
