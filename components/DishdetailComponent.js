@@ -39,6 +39,14 @@ function RenderDish(props) {
                     color = '#f50'
                     onPress = {()=> props.favorite ? console.log('Already favorite') : props.onPress() }
                 />
+                <Icon  
+                    raised
+                    reverse
+                    name = {'pencil'}
+                    type = 'font-awesome'
+                    color = '#512DA8'
+                    onPress = {()=> handleComment()}
+                />
             </Card>
         );
     }
@@ -70,6 +78,33 @@ function RenderComments(props) {
     );
 }
 class Dishdetail extends Component {
+
+    constructor (props) {
+        super(props);
+        this.state = {
+            favorites: [],
+            showModal: false,
+            userRating: 3,
+            author:'',
+            comment: ''
+        }
+    }
+
+    toggleModal(){
+        this.setState({showModal: !this.state.showModal})
+    } 
+
+    ratingComplete(rating) {
+        //console.log("Rating is: " + this.state.userRating)
+        this.setState({userRating: rating}) 
+    }
+
+    handleComment(dishId, rating, author, comment) {
+        this.toggleModal();
+        console.log(dishId, rating, author, comment) // the comments are not the right format.... need to look into this.
+        this.props.postComment(dishId, rating, author, comment);
+    }
+
 
    
 
