@@ -31,22 +31,24 @@ function RenderDish(props) {
                 <Text style ={{margin:10}}>
                     {dish.description}
                 </Text>
-                <Icon  
-                    raised
-                    reverse
-                    name = {props.favorite ? 'heart':'heart-o'}
-                    type = 'font-awesome'
-                    color = '#f50'
-                    onPress = {()=> props.favorite ? console.log('Already favorite') : props.onPress() }
-                />
-                <Icon  
-                    raised
-                    reverse
-                    name = {'pencil'}
-                    type = 'font-awesome'
-                    color = '#512DA8'
-                    onPress = {()=> handleComment()}
-                />
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <Icon  
+                        raised
+                        reverse
+                        name = {props.favorite ? 'heart':'heart-o'}
+                        type = 'font-awesome'
+                        color = '#f50'
+                        onPress = {()=> props.favorite ? console.log('Already favorite') : props.onPress() }
+                    />
+                    <Icon  
+                        raised
+                        reverse
+                        name = {'pencil'}
+                        type = 'font-awesome'
+                        color = '#512DA8'
+                        onPress = {()=> handleComment()}
+                    />
+                </View>
             </Card>
         );
     }
