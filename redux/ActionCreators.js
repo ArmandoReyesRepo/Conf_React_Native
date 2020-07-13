@@ -122,7 +122,7 @@ export const fetchLeaders = () => (dispatch) => {
             throw errMess;
         })
         .then (response => response.json())
-        .then (leaders => dispatch (addLeaders(leadres)))
+        .then (leaders => dispatch (addLeaders(leaders)))
         .catch(error    => dispatch (leadersFailed(error.message)))
 }
 
