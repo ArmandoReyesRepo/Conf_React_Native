@@ -3,30 +3,10 @@ import Home from './HomeComponent';
 import About from './AboutComponent';
 import Menu from './MenuComponent';
 import Dishdetail from './DishdetailComponent';
-import Reservation from './ReservationComponent';
 import Contact from './ContactComponent';
 import { View, Platform, Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from 'react-native-elements';
-import { connect } from 'react-redux';
-import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
-
-const mapStateToProps = state => {
-    return {
-      dishes: state.dishes,
-      comments: state.comments,
-      promotions: state.promotions,
-      leaders: state.leaders
-        
-    }
-}
-
-const mapDispatchToProps = dispatch => ( {
-  fetchDishes: () => dispatch(fetchDishes()),
-  fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos()),
-  fetchLeaders: () => dispatch(fetchLeaders()),
-});
 
 
 
@@ -91,26 +71,6 @@ const ContactNavigator = createStackNavigator({
              onPress ={()=> navigation.toggleDrawer()}
              />
     })
-});
-
-const ReservationNavigator = createStackNavigator({
-  Reservation: {screen: Reservation},
-  
-}, {
-
-  navigationOptions: ({navigation})=> ({
-      headerStyle: {
-          backgroundColor: '#512DA8'
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-          color: '#fff'
-      },
-      headerLeft: <Icon name = 'menu' size ={24}
-           color = "white"
-           onPress ={()=> navigation.toggleDrawer()}
-           />
-  })
 });
 
 const AboutNavigator = createStackNavigator({
@@ -213,35 +173,13 @@ const MainNavigator = createDrawerNavigator ({
             )
 
         }    
-    },
-    Reservation: {
-      screen: ReservationNavigator,
-      navigationOptions: {
-          title: 'Reserve Table',
-          drawerLabel : 'Reserve Table',
-          drawerIcon : ({tintColor})=> (
-            <Icon 
-              name ='cutlery'
-              type = 'font-awesome'
-              size ={24}
-              color = {tintColor}
-            />
-          )
-
-      }    
-  }
+    }
        
 }, { drawerBackgroundColor: '#D1C4E9',
      contentComponent: CustomDrawerContentComponent}); 
 
 class Main extends Component {
   
-    componentDidMount() {
-      this.props.fetchDishes();
-      this.props.fetchComments();
-      this.props.fetchPromos();
-      this.props.fetchLeaders();
-    }
 
     render () {
         return (
@@ -275,4 +213,4 @@ const styles = StyleSheet.create ({
       height: 60
     }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default Main;

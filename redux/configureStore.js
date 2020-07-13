@@ -5,7 +5,6 @@ import { dishes } from './dishes';
 import { comments } from './comments';
 import { promotions } from './promotions';
 import { leaders } from './leaders';
-import { favorites } from './favorites';
 
 
 export const ConfigureStore = () => {
@@ -14,8 +13,7 @@ export const ConfigureStore = () => {
                 dishes,
                 comments,
                 promotions,
-                leaders,
-                favorites
+                leaders
         }),
         applyMiddleware(thunk,logger)
     );
