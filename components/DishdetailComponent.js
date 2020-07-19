@@ -95,7 +95,7 @@ function RenderDish(props) {
                     <Text style ={{margin:10}}>
                         {dish.description}
                     </Text>
-                    <View >
+                    <View style = {{flexDirection:'row', justifyContent:'center'}} >
                         <Icon  
                             raised
                             reverse
@@ -118,7 +118,7 @@ function RenderDish(props) {
                             reverse
                             name = 'share'
                             type = 'font-awesome'
-                            color = '#512DA8'
+                            color = '#2da82f'
                             //style = {style.cardItem}
                             onPress ={()=> shareDish(dish.name, dish.description, baseUrl + dish.image)}
                         />
