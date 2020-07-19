@@ -17,9 +17,13 @@ import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/
 YellowBox.ignoreWarnings ([
   'componentWillReceiveProps has been renamed',
   'componentWillUpdate has been renamed',
+  'componentWillMount has been renamed',
   'DrawerLayoutAndroid drawerPosition',
   'VirtualizedLists should never be nested inside plain ScrollViews with the same orientation - use another VirtualizedList-backed container instead.',
-  'Switch: `onTintColor` is deprecated'
+  'Switch: `onTintColor` is deprecated',
+  'Warning:TimePicker has been merged with DatePickerIOS',
+  'Warning:DatePicker has been merged with DatePickerIOS',
+  'Warning: Failed prop type: Invalid prop'
 ]);
 
 
