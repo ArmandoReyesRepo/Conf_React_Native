@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import { View, Text,ScrollView, FlatList, Modal, StyleSheet, Button, PanResponder, Alert } from 'react-native';
+import { View, Text,ScrollView, FlatList, Modal, StyleSheet, Button, PanResponder, Alert, Share } from 'react-native';
 import { Card, Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -32,6 +32,13 @@ function RenderDish(props) {
             return false;
     };
 
+    const recognizeComment =  ({moveX, moveY, dx,dy}) => {
+        if (dx>200)
+            return true;
+        else
+            return false;
+    };
+
     const panResponder = PanResponder.create ({
         onStartShouldSetPanResponder: (e,gestureState) => {
             return true;
@@ -59,11 +66,22 @@ function RenderDish(props) {
 
                     ],
                     {cancelable:false}
-                )
-            
+                );
+            else if (recognizeComment(gestureState))
+                    props.onShowModal();
             return true;
         }
     });
+
+    const shareDish = (title, message, url) => {
+        Share.share ({
+            title: title,
+            message: title + ': ' +  message + ' ' + url,
+            url: url
+        }, {
+            dialogTitle: ' Share '  + title
+        });
+    }
 
     if( dish != null) {
         return(
@@ -77,14 +95,34 @@ function RenderDish(props) {
                     <Text style ={{margin:10}}>
                         {dish.description}
                     </Text>
-                    <Icon  
-                        raised
-                        reverse
-                        name = {props.favorite ? 'heart':'heart-o'}
-                        type = 'font-awesome'
-                        color = '#f50'
-                        onPress = {()=> props.favorite ? console.log('Already favorite') : props.onPress() }
-                    />
+                    <View >
+                        <Icon  
+                            raised
+                            reverse
+                            name = {props.favorite ? 'heart':'heart-o'}
+                            type = 'font-awesome'
+                            color = '#f50'
+                            onPress = {()=> props.favorite ? console.log('Already favorite') : props.onPress() }
+                        />
+                        <Icon  
+                            raised
+                            reverse
+                            name = {'pencil'}
+                            type = 'font-awesome'
+                            color = '#512DA8'
+                            //style = {styles.cardItem}
+                            onPress = {()=>props.onShowModal()}
+                        />
+                        <Icon
+                            raised
+                            reverse
+                            name = 'share'
+                            type = 'font-awesome'
+                            color = '#512DA8'
+                            //style = {style.cardItem}
+                            onPress ={()=> shareDish(dish.name, dish.description, baseUrl + dish.image)}
+                        />
+                    </View>
                 </Card>
             </Animatable.View>
         );
