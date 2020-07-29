@@ -4,6 +4,12 @@ import { Provider } from 'react-redux';
 import { ConfigureStore } from './redux/configureStore';
 import { PersistGate } from 'redux-persist/es/integration/react';
 import { Loading } from './components/LoadingComponent';
+import { YellowBox } from 'react-native';
+
+YellowBox.ignoreWarnings ([
+  'DatePickerAndroid has been merged',
+  'TimePickerAndroid has been merged'
+])
 
 const {persistor, store} = ConfigureStore();
 
