@@ -7,11 +7,14 @@ import Reservation from './ReservationComponent';
 import Favorites from './FavoriteComponent';
 import Login from './LoginComponent';
 import Contact from './ContactComponent';
-import { View, Platform, Image, StyleSheet, ScrollView, Text, YellowBox } from 'react-native';
+import { View, Platform, Image, StyleSheet, ScrollView, Text, YellowBox, ToastAndroid } from 'react-native';
 import { createStackNavigator, createDrawerNavigator, DrawerItems, SafeAreaView } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchDishes, fetchComments, fetchPromos, fetchLeaders } from '../redux/ActionCreators';
+import NetInfo from '@react-native-community/netinfo';
+
+
 
 
 YellowBox.ignoreWarnings ([
@@ -23,7 +26,8 @@ YellowBox.ignoreWarnings ([
   'Switch: `onTintColor` is deprecated',
   'Warning:TimePicker has been merged with DatePickerIOS',
   'Warning:DatePicker has been merged with DatePickerIOS',
-  'Warning: Failed prop type: Invalid prop'
+  'Warning: Failed prop type: Invalid prop',
+  'Possible Unhandled Promise Rejection'
 ]);
 
 
@@ -331,6 +335,44 @@ class Main extends Component {
       this.props.fetchComments();
       this.props.fetchPromos();
       this.props.fetchLeaders();
+
+      NetInfo.fetch().then((connectionInfo) => {
+        ToastAndroid.show ('Initial Network Connectivity Type : ' 
+                          + connectionInfo.type + ' , effective Type: ' +
+                          connectionInfo.isConnected, 
+                          ToastAndroid.LONG)
+      });
+
+    
+
+      NetInfo.addEventListener( connectionChange => this.handleConnectivityChange(connectionChange))
+    }
+
+    componentWillUnmount () {
+      NetInfo.removeEventListener( connectionChange => this.handleConnectivityChange(connectionChange))
+    }
+
+    handleConnectivityChange = (connectionInfo) => {
+      switch (connectionInfo.type) {
+        case 'none':
+          ToastAndroid.show('You are now Offline', 
+            ToastAndroid.LONG);
+          break;
+        case 'wifi':
+          ToastAndroid.show('You are now connected to WiFi',
+            ToastAndroid.LONG);
+          break;
+        case 'cellular':
+          ToastAndroid.show('You are now connected to Cellular',
+            ToastAndroid.LONG);
+          break;
+        case 'unknown':
+          ToastAndroid.show('You now have an unknown connection',
+            ToastAndroid.LONG);
+          break;
+        default:
+          break;
+      }
     }
 
     render () {

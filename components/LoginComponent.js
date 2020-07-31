@@ -5,7 +5,6 @@ import * as SecureStore from 'expo-secure-store';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
-import { Asset, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { baseUrl } from '../shared/baseUrl';
 import { ScrollView } from 'react-native-gesture-handler';

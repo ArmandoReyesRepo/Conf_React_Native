@@ -8,7 +8,8 @@ import { YellowBox } from 'react-native';
 
 YellowBox.ignoreWarnings ([
   'DatePickerAndroid has been merged',
-  'TimePickerAndroid has been merged'
+  'TimePickerAndroid has been merged',
+  
 ])
 
 const {persistor, store} = ConfigureStore();
