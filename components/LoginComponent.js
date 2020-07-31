@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import {  View, Button, StyleSheet, Image} from  'react-native';
 import { Icon, Input, CheckBox} from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
+import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
+import { Asset, ImageManipulator } from 'expo';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { baseUrl } from '../shared/baseUrl';
 import { ScrollView } from 'react-native-gesture-handler';
-import * as Permissions from 'expo-permissions';
+
 
 class LoginTab extends Component {
 
@@ -144,10 +147,22 @@ class RegisterTab extends Component {
                 aspect: [4,3]
             });
             if (!capturedImage.cancelled) {
-                this.setState({imageUrl: capturedImage.uri})
+                this.processImage(capturedImage.uri);
             }
         }
     }
+
+    processImage = async (imageUri) => {
+        let processedImage = await ImageManipulator.manipulateAsync (
+            imageUri,
+            [
+                { resize: {width: 600}}
+            ],
+            {format: 'png'}
+        );
+        this.setState({imageUrl: processedImage.uri})
+    }
+
     static navigationOptions = {
         title: 'Register',
         tabBarIcon:  ({tintColor})=> (
